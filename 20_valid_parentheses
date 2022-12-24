@@ -1,0 +1,23 @@
+impl Solution {
+    pub fn is_valid(s: String) -> bool {
+    let mut stack = Vec::new();
+    // n.b. iterate chars in a string
+    for c in s.chars() {
+        // the use of match i surprising
+        // and hard to understand...
+        stack.push(match c {
+            '(' => ')',
+            '[' => ']',
+            '{' => '}',
+            _ => {
+                if Some(c) == stack.pop() {
+                    continue;
+                } else {
+                    return false;
+                }
+            }
+        })
+    }
+    stack.is_empty()
+    }  
+}
