@@ -1,16 +1,30 @@
-// by brainplot
+// suppose we got 12345
+// the empty and singleton list is handled by the while loop
+//      if head is None, them while breaks and return prev, which is None
+//      if head.next is None, the first iter goes like:
+//          box = 1, next=None, 1.next=None, prev=1, curr=None
+//          the second iter breaks and return prev=1 whose next is None,
+//          which is the original singleton
+// by brainplot and comments
 impl Solution {
     pub fn reverse_list(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
-        // declare what to return as Option<Box<ListNode>>
         // shit has to be mut of course
         let mut prev: Option<Box<ListNode>> = None;
         let mut curr = head;
         
-        // let returns a value too? That is crazy
+        // let returns a bool too? That is crazy functional programming
+        // When curr is None, while suffers heart-breaking pain;
         while let Some(mut boxed_node) = curr {
             // What does .take do?
-            // It Takes the value out of the option, leaving a None in its place.
+            // It takes the value out of the option, leaving a None in its place.
+            
+            // first iter box=1, next=2, 1.next=0, prev=1, curr=2
+            // second iter box=2, next=3, 2.next=1, prev=2, curr=3
+            // ...
+            // fifth iter box=5, next=None, 5.next=4, prev=5, curr=None
+            // breaks the loop here
             let next = boxed_node.next.take();
+            
             boxed_node.next = prev;
             prev = Some(boxed_node);
             curr = next;
