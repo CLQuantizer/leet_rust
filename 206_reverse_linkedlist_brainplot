@@ -1,0 +1,21 @@
+// by brainplot
+impl Solution {
+    pub fn reverse_list(head: Option<Box<ListNode>>) -> Option<Box<ListNode>> {
+        // declare what to return as Option<Box<ListNode>>
+        // shit has to be mut of course
+        let mut prev: Option<Box<ListNode>> = None;
+        let mut curr = head;
+        
+        // let returns a value too? That is crazy
+        while let Some(mut boxed_node) = curr {
+            // What does .take do?
+            // It Takes the value out of the option, leaving a None in its place.
+            let next = boxed_node.next.take();
+            boxed_node.next = prev;
+            prev = Some(boxed_node);
+            curr = next;
+        }
+        
+        prev
+    }
+}
